@@ -1,0 +1,244 @@
+{
+  "info": {
+    "name": "Sistema de Gestão de Livros",
+    "description": "API REST para gestão de livros - Conforme especificação",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Livros",
+      "item": [
+        {
+          "name": "Criar Livro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"autor\": \"Machado de Assis\",\n  \"isbn\": \"978-8-5398-0823-5\",\n  \"anoPublicacao\": 1899\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/livros",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["livros"]
+            },
+            "description": "Cria um novo livro com validações obrigatórias"
+          }
+        },
+        {
+          "name": "Listar Todos os Livros",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/livros",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["livros"]
+            },
+            "description": "Retorna a lista de todos os livros"
+          }
+        },
+        {
+          "name": "Obter Livro por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/livros/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["livros", "1"]
+            },
+            "description": "Obtém um livro específico pelo seu ID"
+          }
+        },
+        {
+          "name": "Atualizar Livro",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Dom Casmurro - Edição Revisada\",\n  \"autor\": \"Machado de Assis\",\n  \"isbn\": \"978-8-5398-0823-5\",\n  \"anoPublicacao\": 1899\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/livros/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["livros", "1"]
+            },
+            "description": "Atualiza um livro existente (ISBN não pode ser alterado)"
+          }
+        },
+        {
+          "name": "Marcar como Indisponível",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/livros/1/indisponivel",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["livros", "1", "indisponivel"]
+            },
+            "description": "Marca um livro como indisponível"
+          }
+        },
+        {
+          "name": "Marcar como Disponível",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/livros/1/disponivel",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["livros", "1", "disponivel"]
+            },
+            "description": "Marca um livro como disponível"
+          }
+        },
+        {
+          "name": "Deletar Livro",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/livros/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["livros", "1"]
+            },
+            "description": "Deleta um livro do sistema"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Testes de Validação",
+      "item": [
+        {
+          "name": "Título muito curto (deve falhar)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"AB\",\n  \"autor\": \"Machado de Assis\",\n  \"isbn\": \"978-8-5398-0823-5\",\n  \"anoPublicacao\": 1899\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/livros",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["livros"]
+            },
+            "description": "Deve retornar 400 - Título com menos de 3 caracteres"
+          }
+        },
+        {
+          "name": "ISBN em formato inválido (deve falhar)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"autor\": \"Machado de Assis\",\n  \"isbn\": \"123-456\",\n  \"anoPublicacao\": 1899\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/livros",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["livros"]
+            },
+            "description": "Deve retornar 400 - ISBN não atende o formato XXX-X-XXXX-XXXX-X"
+          }
+        },
+        {
+          "name": "Ano fora do intervalo (deve falhar)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"autor\": \"Machado de Assis\",\n  \"isbn\": \"978-8-5398-0823-5\",\n  \"anoPublicacao\": 1000\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/livros",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["livros"]
+            },
+            "description": "Deve retornar 400 - Ano deve estar entre 1500 e 2025"
+          }
+        },
+        {
+          "name": "ISBN duplicado (deve falhar)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Outro Livro\",\n  \"autor\": \"Outro Autor\",\n  \"isbn\": \"978-8-5398-0823-5\",\n  \"anoPublicacao\": 2020\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/livros",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["livros"]
+            },
+            "description": "Deve retornar 400 - ISBN já existe no sistema"
+          }
+        }
+      ]
+    }
+  ]
+}

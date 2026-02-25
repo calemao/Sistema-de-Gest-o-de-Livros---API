@@ -1,0 +1,268 @@
+{
+  "info": {
+    "name": "Biblioteca API",
+    "description": "Coleção de requisições para a API de Gestão de Biblioteca",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api"]
+        }
+      }
+    },
+    {
+      "name": "Categorias",
+      "item": [
+        {
+          "name": "Listar todas as categorias",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/categorias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "categorias"]
+            }
+          }
+        },
+        {
+          "name": "Criar categoria",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Ficção Científica\",\n  \"descricao\": \"Livros de ficção científica\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/categorias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "categorias"]
+            }
+          }
+        },
+        {
+          "name": "Obter categoria por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/categorias/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "categorias", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Livros",
+      "item": [
+        {
+          "name": "Listar todos os livros",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/livros",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "livros"]
+            }
+          }
+        },
+        {
+          "name": "Listar livros ativos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/livros/ativos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "livros", "ativos"]
+            }
+          }
+        },
+        {
+          "name": "Criar livro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"1984\",\n  \"autor\": \"George Orwell\",\n  \"isbn\": \"978-0451524935\",\n  \"dataPublicacao\": \"1949-06-08\",\n  \"descricao\": \"Um romance distópico clássico\",\n  \"categoria\": {\n    \"id\": 1\n  },\n  \"quantidadeTotal\": 5,\n  \"quantidadeDisponivel\": 5,\n  \"ativo\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/livros",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "livros"]
+            }
+          }
+        },
+        {
+          "name": "Buscar livro por título",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/livros/buscar/titulo?titulo=1984",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "livros", "buscar", "titulo"],
+              "query": [
+                {
+                  "key": "titulo",
+                  "value": "1984"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuários",
+      "item": [
+        {
+          "name": "Listar todos os usuários",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios"]
+            }
+          }
+        },
+        {
+          "name": "Criar usuário",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João Silva\",\n  \"email\": \"joao@example.com\",\n  \"telefone\": \"11987654321\",\n  \"cpf\": \"12345678901\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Empréstimos",
+      "item": [
+        {
+          "name": "Listar todos os empréstimos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/emprestimos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "emprestimos"]
+            }
+          }
+        },
+        {
+          "name": "Criar empréstimo",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/emprestimos?usuarioId=1&livroId=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "emprestimos"],
+              "query": [
+                {
+                  "key": "usuarioId",
+                  "value": "1"
+                },
+                {
+                  "key": "livroId",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar empréstimos ativos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/emprestimos/ativos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "emprestimos", "ativos"]
+            }
+          }
+        },
+        {
+          "name": "Registrar devolução",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/emprestimos/1/devolver",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "emprestimos", "1", "devolver"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
