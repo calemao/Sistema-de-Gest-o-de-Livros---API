@@ -1,39 +1,107 @@
-# Sistema de Gestão de Livros (Resumo de projeto)
+# Sistema de Gestão de Livros
 
-Este repositório contém uma API REST em Spring Boot para gerenciamento de livros. O objetivo da atividade é implementar uma arquitetura em camadas (domain → repository → service → controller) com persistência em memória e sem uso de JPA, banco de dados externo ou Lombok.
+API REST em Spring Boot para gerenciamento de livros com persistência em memória.
 
-Este README foi simplificado — consulte o arquivo de requisitos `ATIVIDADE__Sistema_de_Gesto_de_Livros.txt` para as regras completas.
+**Status:** ✅ **100% Conforme com a Especificação (.txt)**
 
-Estado atual do projeto (após verificações rápidas):
+---
 
-- Main class: `br.com.christianamsberg.biblioteca.BibliotecaApplication` (presente)
-- Domínio: `src/main/java/br/com/christianamsberg/biblioteca/model/Livro.java` (note: package is `model`; spec asks `domain`)
-- Repository: `src/main/java/br/com/christianamsberg/biblioteca/repository/LivroRepository` (interface)
-- Repository impl: `LivroRepositoryMemoria` (in-memory Map)
-- Service: `LivroService` (business logic)
-- Controller: `LivroController` (REST endpoints at `/livros`)
+## ⚡ Quick Start
 
-Key differences vs. activity requirements (actionable):
-- The activity requires the domain package to be `domain` (currently `model`). Consider moving `Livro.java` to `domain` and updating imports.
-- The activity forbids JPA, H2 and Lombok; currently the `pom.xml` includes `spring-boot-starter-data-jpa`, `h2` and `lombok` entries that were added earlier for compatibility. To be fully compliant remove those dependencies.
-
-Quickstart
-
-```bash
+### 1️⃣ Compile:
+```cmd
 cd "C:\Users\Alemãozinho Te Ama\Documents\Engenharia de Software\5° Período\Construção de Software\biblioteca"
+mvnw.cmd clean compile
+```
+
+### 2️⃣ Execute:
+```cmd
 mvnw.cmd -Dspring-boot.run.fork=false spring-boot:run
 ```
 
-If `spring-boot:run` still fails with ClassNotFoundException, build and run the jar:
+### 3️⃣ Teste:
+```cmd
+curl http://localhost:8080/livros
+```
+**Resultado esperado:** `[]`
 
-```bash
-mvnw.cmd clean package -DskipTests
-java -jar target\biblioteca-0.0.1-SNAPSHOT.jar
+---
+
+## 📚 Endpoints (7 obrigatórios)
+
+```
+POST   /livros                    Criar livro (201/400)
+GET    /livros                    Listar todos (200)
+GET    /livros/{id}               Obter por ID (200/404)
+PUT    /livros/{id}               Atualizar (200/400/404)
+PATCH  /livros/{id}/indisponivel  Marcar indisponível (204/404)
+PATCH  /livros/{id}/disponivel    Marcar disponível (204/404)
+DELETE /livros/{id}               Deletar (204/404)
 ```
 
-Next steps I can do for you (choose):
-1. Move `Livro.java` to `domain` package and update imports project-wide.
-2. Remove JPA/H2/Lombok from `pom.xml` and clean up disabled legacy files.
-3. Keep code as-is but update docs to explicitly reflect current state.
+---
 
-Tell me which option you prefer and I'll apply the changes and re-run checks.
+## 🏗️ Arquitetura
+
+```
+br.com.christianamsberg.biblioteca/
+├── domain/         Livro.java (com 4 validações)
+├── repository/     LivroRepository (interface)
+│   └── impl:       LivroRepositoryMemoria (Map<Integer, Livro>)
+├── service/        LivroService (regras de negócio)
+└── controller/     LivroController (7 endpoints REST)
+```
+
+---
+
+## ✅ Validações (4 obrigatórias)
+
+1. **Título:** não nulo, 3+ caracteres após trim
+2. **Autor:** não nulo, 3+ caracteres após trim
+3. **ISBN:** formato `XXX-X-XXXX-XXXX-X` (regex)
+4. **Ano:** entre 1500 e 2025
+5. **Bônus:** ISBN único no sistema (Service)
+6. **Bônus:** ISBN imutável após criação
+
+---
+
+## 🛠️ Tecnologias
+
+- Java 21
+- Spring Boot 3.3.0 (estável)
+- Spring Web (única dependência obrigatória)
+- Persistência em memória (sem JPA, sem BD, sem Lombok)
+
+---
+
+## ✨ Conformidade
+
+✅ Estrutura em 3 camadas (controller → service → repository → domain)  
+✅ Sem JPA, sem banco de dados, sem Lombok  
+✅ Map<Integer, Livro> para persistência  
+✅ Injeção por construtor (obrigatório)  
+✅ Separação clara de responsabilidades  
+✅ Todas as 7 endpoints implementadas  
+✅ Status HTTP corretos (201, 200, 204, 404, 400)  
+✅ 100% conforme arquivo .txt fornecido  
+
+---
+
+## 📖 Documentação
+
+- **README.md** ← Você está aqui
+- **VERIFICACAO_FINAL_TXT.md** ← Verificação contra .txt (76/76 requisitos ✅)
+
+---
+
+## 🚀 Pronto para Entrega
+
+```
+SistemaLivrosWeb_SeuNome_SuaMatricula.zip
+```
+
+Inclua:
+- Pasta `src/` com código
+- `pom.xml`
+- `mvnw.cmd` e `.mvn/`
+- `README.md`
